@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<title>Exame Português - IAVE Ranking</title>
+
+<style>
+body{
+font-family: Arial;
+background:#f2f2f2;
+margin:30px;
+}
+
+.section{
+background:white;
+padding:20px;
+margin-bottom:20px;
+border-radius:10px;
+}
+
+h1{text-align:center;}
+
+input, textarea{
+width:100%;
+padding:8px;
+margin-top:5px;
+}
+
+button{
+padding:10px;
+background:black;
+color:white;
+border:none;
+cursor:pointer;
+}
+
+#resultado, #ranking{
+background:white;
+padding:20px;
+border-radius:10px;
+margin-top:20px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>📘 Exame Final Português - 9.º Ano (IAVE)</h1>
+
+<div class="section">
+<h2>👤 Nome do aluno</h2>
+<input id="nome" placeholder="Escreve o teu nome">
+</div>
+
+<div class="section">
+
+<h2>📖 GRUPO I — Os Lusíadas</h2>
+
+<p>“Vasco da Gama enfrentava o mar desconhecido enquanto os deuses observavam o destino dos homens.”</p>
+
+1. Tema do excerto:
+<input id="q1">
+
+2. Herói histórico:
+<input id="q2">
+
+3. Elemento mitológico:
+<input id="q3">
+
+4. Significado de “mar desconhecido”:
+<input id="q4">
+
+5. Tipo de narrador:
+<input id="q5">
+
+</div>
+
+<div class="section">
+
+<h2>📚 GRUPO II — Interpretação</h2>
+
+6. Tipo de texto:
+<input id="q6">
+
+7. “Destino dos homens” significa:
+<input id="q7">
+
+8. Tom do texto:
+<input id="q8">
+
+9. Ideia principal:
+<textarea id="q9"></textarea>
+
+10. Palavra ligada a coragem:
+<input id="q10">
+
+</div>
+
+<div class="section">
+
+<h2>📘 GRUPO III — Gramática</h2>
+
+11. Sujeito:
+<input id="q11">
+
+12. Complemento direto:
+<input id="q12">
+
+13. Complemento indireto:
+<input id="q13">
+
+14. Classificação da oração:
+<input id="q14">
+
+15. Tipo de oração:
+<input id="q15">
+
+16. Classe de “rapidamente”:
+<input id="q16">
+
+17. Classe de “embora”:
+<input id="q17">
+
+18. Corrige:
+<textarea id="q18"></textarea>
+
+</div>
+
+<div class="section">
+
+<h2>📖 GRUPO IV — Literatura</h2>
+
+19. Vasco da Gama representa:
+<input id="q19">
+
+20. Autor de Os Lusíadas:
+<input id="q20">
+
+21. Género da obra:
+<input id="q21">
+
+</div>
+
+<div class="section">
+
+<h2>✍️ GRUPO V — Escrita (180 palavras)</h2>
+
+22. Texto de opinião:
+<textarea id="q22" style="height:180px;"></textarea>
+
+23. Número de palavras:
+<input id="q23">
+
+</div>
+
+<button onclick="corrigir()">Corrigir Exame</button>
+
+<div id="resultado"></div>
+
+<div id="ranking">
+<h2>🏆 Ranking da Turma</h2>
+<ul id="listaRanking"></ul>
+</div>
+
+<script>
+
+let ranking = [];
+
+function contar(text){
+return text.trim().split(/\s+/).length;
+}
+
+function corrigir(){
+
+let nome = document.getElementById("nome").value;
+let score = 0;
+
+// GRUPO I
+if(document.getElementById("q1").value.length > 2) score++;
+if(document.getElementById("q2").value.toLowerCase().includes("vasco")) score++;
+if(document.getElementById("q3").value.toLowerCase().includes("deus")) score++;
+if(document.getElementById("q4").value.length > 3) score++;
+if(document.getElementById("q5").value.length > 2) score++;
+
+// GRUPO II
+if(document.getElementById("q6").value.length > 2) score++;
+if(document.getElementById("q7").value.length > 2) score++;
+if(document.getElementById("q8").value.length > 2) score++;
+if(document.getElementById("q9").value.length > 10) score++;
+if(document.getElementById("q10").value.length > 2) score++;
+
+// GRUPO III
+if(document.getElementById("q11").value.length > 2) score++;
+if(document.getElementById("q12").value.length > 2) score++;
+if(document.getElementById("q13").value.length > 2) score++;
+if(document.getElementById("q14").value.length > 2) score++;
+if(document.getElementById("q15").value.length > 2) score++;
+if(document.getElementById("q16").value.toLowerCase().includes("adv")) score++;
+if(document.getElementById("q17").value.toLowerCase().includes("conj")) score++;
+if(document.getElementById("q18").value.length > 5) score++;
+
+// GRUPO IV
+if(document.getElementById("q19").value.length > 2) score++;
+if(document.getElementById("q20").value.toLowerCase().includes("camões")) score++;
+if(document.getElementById("q21").value.length > 2) score++;
+
+// ESCRITA
+let words = contar(document.getElementById("q22").value);
+
+if(words >= 180) score += 5;
+else if(words >= 120) score += 2;
+
+// RESULTADO
+document.getElementById("resultado").innerHTML =
+"<h2>Resultado de " + nome + "</h2>" +
+"<p>Pontuação: " + score + "/28</p>" +
+"<p>Palavras: " + words + "</p>";
+
+// RANKING
+ranking.push({nome: nome, score: score});
+
+ranking.sort((a,b)=>b.score-a.score);
+
+let lista = "";
+for(let i=0;i<ranking.length;i++){
+lista += "<li>" + ranking[i].nome + " - " + ranking[i].score + "/28</li>";
+}
+
+document.getElementById("listaRanking").innerHTML = lista;
+
+}
+
+</script>
+
+</body>
+</html>
